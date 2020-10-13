@@ -1,0 +1,74 @@
+  
+import axios from 'axios'
+const url = 'http://localhost:3000'
+
+const config = {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    }
+  };
+// export const fetchData = async (country) => {
+//     let changeableURL = url;
+//     if(country){
+//         changeableURL= `${url}/countries/${country}`;
+//         try {
+//             const { data:{ confirmed,recovered,deaths,lastUpdate}} = await axios.get(changeableURL);
+//             return { confirmed,recovered,deaths,lastUpdate };
+//         } catch (error){
+    
+//         };
+//     }
+//     try {
+//         const { data:{ confirmed,recovered,deaths,lastUpdate}} = await axios.get(url);
+//         return { confirmed,recovered,deaths,lastUpdate };
+//     } catch (error){
+
+//     };
+    
+// }
+
+export const fetchAllData = async ()=>{
+    try{
+        const response = await axios.get(`${url}/get_all`,config);
+        return response.data.map((data)=>({
+            id: data.id,
+            name: data.name,
+            command: data.command
+        })
+        );
+    }
+    catch(error){
+        console.log(error.message)
+    }
+}
+
+export const addCommand = async (data)=>{
+    console.log(data)
+    try{
+        await axios.post(`${url}/add_command`,data,config);
+    }
+    catch(error){
+        console.log(error.message)
+    }
+}
+export const removeCommand = async (id)=>{
+    console.log(id)
+    try{
+        await axios.delete(`${url}/remove/${id}`,config);
+    }
+    catch(error){
+        console.log(error.message)
+    }
+}
+
+// export const addCommand = async ()=> {
+//     try{
+//         const { data: {countries}}= await axios.get(`${url}/countries`)
+
+//         return countries.map((country)=> country.name);
+//     }
+//     catch(error){
+
+//     }
+// }
