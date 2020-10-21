@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // import styles from './AddCommands.module.css'
 import { IconButton, Card, CardContent, CardActions, Typography, Grid } from '@material-ui/core';
@@ -9,43 +9,44 @@ import EditIcon from '@material-ui/icons/Edit';
 import { fetchAllData, removeCommand } from '../../api';
 
 
-const Command = ({data}) => {
-    data = Array.from(data).reverse()
-    // const [commands, setCommands] = useState([])
+const Command = () => {
+    // data = Array.from(data).reverse()
+    const [commands, setCommands] = useState([])
 
-    // useEffect(()=>{
-    //     const fetchData = async () => {
-    //         setCommands(await fetchAllData());
-    //     }
-    //     fetchData();
-    //     console.log(commands)
-    // },[])
-   
-        const handleDelete = (id) => {
-            
-            removeCommand(id)
-            window.location.reload()
-        };
-        
-        const handleCopy = (copyCommand) => {
-            navigator.clipboard.writeText(copyCommand).then(() => {
-              /* clipboard successfully set */
-              console.log("copy sucessfull")
-            });
-          }
-          const useStyles = makeStyles({
-            root: {
-                marginBottom: '10px',
-            },
+    useEffect(() => {
+        async function fetchData() { return await fetchAllData(); }
+        fetchData().then((fetchedData) => {
+            setCommands(fetchedData)
+        }
+        );
+    }, [])
+
+    useEffect(() => { }, [commands])
+
+    const handleDelete = (id) => {
+        removeCommand(id)
+        window.location.reload()
+    };
+
+    const handleCopy = (copyCommand) => {
+        navigator.clipboard.writeText(copyCommand).then(() => {
+            /* clipboard successfully set */
+            console.log("copy sucessfull")
         });
-        const classes = useStyles();
+    }
+    const useStyles = makeStyles({
+        root: {
+            marginBottom: '10px',
+        },
+    });
+    const classes = useStyles();
     return (
         <Grid item container spacing={2}>
             <Grid item xs={2}></Grid>
             <Grid item xs={8}>
                 {
-                    data.map(item => {
-                        return (<Card key={item.id} classes={{root: classes.root}}>
+                    commands.map(item => {
+                        return (<Card key={item.id} classes={{ root: classes.root }}>
                             <CardContent>
                                 <Typography variant="h5" component="h4">
                                     {item.name}
@@ -55,13 +56,13 @@ const Command = ({data}) => {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <IconButton aria-label="copy" fontSize="small" color="primary" >
-                                    <FileCopyIcon onClick={()=>handleCopy(item.command)}/>
+                                <IconButton aria-label="copy" fontSize="small" color="primary" onClick={() => handleCopy(item.command)} >
+                                    <FileCopyIcon  />
                                 </IconButton>
                                 <IconButton aria-label="edit" fontSize="small" >
                                     <EditIcon />
                                 </IconButton>
-                                <IconButton aria-label="delete" fontSize="small" onClick={()=>handleDelete(item.id)}>
+                                <IconButton aria-label="delete" fontSize="small" onClick={() => handleDelete(item.id)}>
                                     <DeleteIcon />
                                 </IconButton>
                             </CardActions>
@@ -72,5 +73,5 @@ const Command = ({data}) => {
             <Grid item xs={2}></Grid>
         </Grid>
     );
-            }
+}
 export default Command;
