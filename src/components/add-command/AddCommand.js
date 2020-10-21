@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
-import styles from './AddCommands.module.css'
 import { TextField, Button, Box, Grid } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
+
 import { addCommand } from '../../api';
-import App from '../../App';
+
 
 const useStyles = makeStyles({
     root: {

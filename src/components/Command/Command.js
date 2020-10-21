@@ -16,17 +16,22 @@ const Command = () => {
     useEffect(() => {
         async function fetchData() { return await fetchAllData(); }
         fetchData().then((fetchedData) => {
-            setCommands(fetchedData)
+            setCommands(Array.from(fetchedData).reverse())
         }
         );
     }, [])
 
-    useEffect(() => { }, [commands])
+    useEffect(() => {}, [commands])
 
     const handleDelete = (id) => {
+        let updatedCommands = commands.filter((i) => i.id != id)
+        setCommands(updatedCommands)
         removeCommand(id)
-        window.location.reload()
     };
+
+    const handleEdit = () =>{
+
+    }
 
     const handleCopy = (copyCommand) => {
         navigator.clipboard.writeText(copyCommand).then(() => {
@@ -57,7 +62,7 @@ const Command = () => {
                             </CardContent>
                             <CardActions>
                                 <IconButton aria-label="copy" fontSize="small" color="primary" onClick={() => handleCopy(item.command)} >
-                                    <FileCopyIcon  />
+                                    <FileCopyIcon />
                                 </IconButton>
                                 <IconButton aria-label="edit" fontSize="small" >
                                     <EditIcon />
