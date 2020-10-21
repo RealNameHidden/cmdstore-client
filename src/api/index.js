@@ -1,6 +1,5 @@
   
 import axios from 'axios'
-
 const url = "https://command-store-api.herokuapp.com"
 
 const config = {
