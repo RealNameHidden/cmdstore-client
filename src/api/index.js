@@ -1,6 +1,7 @@
   
 import axios from 'axios'
-const url = "https://command-store-api.herokuapp.com"
+const url = process.env.REACT_APP_API
+console.log("Harry potter" + url)
 
 const config = {
     headers: {
