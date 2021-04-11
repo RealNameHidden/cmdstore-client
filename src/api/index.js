@@ -1,7 +1,6 @@
   
 import axios from 'axios'
 const url = process.env.REACT_APP_API
-console.log("Harry potter" + url)
 
 const config = {
     headers: {
